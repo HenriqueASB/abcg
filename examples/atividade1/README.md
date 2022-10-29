@@ -1,3 +1,5 @@
+Henrique Augusto Santos Batista
+RA 11050714
 
 a aplicação é muito simples e foi feita para ser uma simples demonstração de como usar algumas funções da biblioteca e trabalhar com variáveis que é uma coisa extremamente necessária quando falamos de desenvolvimento de jogos
 

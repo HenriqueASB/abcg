@@ -21,8 +21,6 @@ private:
   GLuint m_VBOColors{};
   GLuint m_program{};
 
-  float m_rotation{};
-
 
   abcg::Timer m_timer;
 
