@@ -38,7 +38,7 @@ void main() {
 
 void Window::onPaint() {
   // Check whether to render the next triangle
-  if (m_timer.elapsed() < 1.0 / 6)
+  if (m_timer.elapsed() < 1.0 / 2)
     return;
   m_timer.restart();
 
