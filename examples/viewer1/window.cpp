@@ -33,7 +33,7 @@ void Window::onCreate() {
                                  {.source = assetsPath + "depth.frag",
                                   .stage = abcg::ShaderStage::Fragment}});
 
-  m_model.loadObj(assetsPath + "field.obj");
+  m_model.loadObj(assetsPath + "terrain.obj");
   m_model.setupVAO(m_program);
 
   m_trianglesToDraw = m_model.getNumTriangles();
@@ -48,6 +48,7 @@ void Window::onUpdate() {
 }
 
 void Window::onPaint() {
+
   abcg::glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   abcg::glViewport(0, 0, m_viewportSize.x, m_viewportSize.y);

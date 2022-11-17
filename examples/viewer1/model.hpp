@@ -1,6 +1,8 @@
 #ifndef MODEL_HPP_
 #define MODEL_HPP_
 
+#include <random>
+
 #include "abcgOpenGL.hpp"
 
 struct Vertex {
@@ -15,6 +17,7 @@ public:
   void render(int numTriangles = -1) const;
   void setupVAO(GLuint program);
   void destroy() const;
+  void randomZ();
 
   [[nodiscard]] int getNumTriangles() const {
     return gsl::narrow<int>(m_indices.size()) / 3;
@@ -27,6 +30,8 @@ private:
 
   std::vector<Vertex> m_vertices;
   std::vector<GLuint> m_indices;
+
+  std::default_random_engine m_randomEngine;
 
   void createBuffers();
   void standardize();

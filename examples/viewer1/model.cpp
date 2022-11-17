@@ -83,11 +83,23 @@ void Model::loadObj(std::string_view path, bool standardize) {
     }
   }
 
+  randomZ();
+
   if (standardize) {
     Model::standardize();
   }
 
   createBuffers();
+}
+
+void Model::randomZ(){
+  auto const seed{std::chrono::steady_clock::now().time_since_epoch().count()};
+  m_randomEngine.seed(seed);
+  std::uniform_real_distribution rd(0.0f, 1.0f);
+
+  for (auto &vertex : m_vertices) {
+    vertex.position = {vertex.position.x, vertex.position.y, rd(m_randomEngine)};
+  }
 }
 
 void Model::render(int numTriangles) const {
