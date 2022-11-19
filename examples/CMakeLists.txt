@@ -2,4 +2,4 @@
 #add_subdirectory(firstapp)
 #add_subdirectory(atividade1)
 # add_subdirectory(atividade2)
-add_subdirectory(viewer1)
+add_subdirectory(atividade3)

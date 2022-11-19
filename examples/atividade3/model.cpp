@@ -82,7 +82,9 @@ void Model::loadObj(std::string_view path, bool standardize) {
       m_indices.push_back(hash[vertex]);
     }
   }
-
+  auto const seed{std::chrono::steady_clock::now().time_since_epoch().count()};
+  m_randomEngine.seed(seed);
+  
   randomZ();
 
   if (standardize) {
@@ -93,9 +95,7 @@ void Model::loadObj(std::string_view path, bool standardize) {
 }
 
 void Model::randomZ(){
-  auto const seed{std::chrono::steady_clock::now().time_since_epoch().count()};
-  m_randomEngine.seed(seed);
-  std::uniform_real_distribution rd(0.0f, 1.0f);
+  std::uniform_real_distribution rd(0.f, 1.0f);
 
   for (auto &vertex : m_vertices) {
     vertex.position = {vertex.position.x, vertex.position.y, rd(m_randomEngine)};

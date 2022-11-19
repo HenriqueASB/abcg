@@ -18,6 +18,10 @@ public:
   void setupVAO(GLuint program);
   void destroy() const;
   void randomZ();
+  void createBuffers();
+  void standardize();
+
+
 
   [[nodiscard]] int getNumTriangles() const {
     return gsl::narrow<int>(m_indices.size()) / 3;
@@ -33,8 +37,7 @@ private:
 
   std::default_random_engine m_randomEngine;
 
-  void createBuffers();
-  void standardize();
+
 };
 
 #endif

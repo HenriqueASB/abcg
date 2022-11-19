@@ -70,6 +70,7 @@ void Window::onPaint() {
   abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &m_modelMatrix[0][0]);
   abcg::glUniform4f(colorLoc, 1.0f, 1.0f, 1.0f, 1.0f); // White
 
+
   m_model.render(m_trianglesToDraw);
 
   abcg::glUseProgram(0);
