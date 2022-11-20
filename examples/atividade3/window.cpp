@@ -4,9 +4,9 @@ void Window::onEvent(SDL_Event const &event) {
   glm::ivec2 mousePosition;
   SDL_GetMouseState(&mousePosition.x, &mousePosition.y);
 
-  // if (event.type == SDL_MOUSEMOTION) {
-  //   m_trackBall.mouseMove(mousePosition);
-  // }
+  if (event.type == SDL_MOUSEMOTION) {
+    m_trackBall.mouseMove(mousePosition);
+  }
   if (event.type == SDL_MOUSEBUTTONDOWN &&
       event.button.button == SDL_BUTTON_LEFT) {
     m_trackBall.mousePress(mousePosition);
@@ -69,7 +69,6 @@ void Window::onPaint() {
   // Set uniform variables for the current model
   abcg::glUniformMatrix4fv(modelMatrixLoc, 1, GL_FALSE, &m_modelMatrix[0][0]);
   abcg::glUniform4f(colorLoc, 1.0f, 1.0f, 1.0f, 1.0f); // White
-
 
   m_model.render(m_trianglesToDraw);
 
