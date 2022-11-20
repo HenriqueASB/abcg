@@ -10,8 +10,7 @@ void TrackBall::mouseMove(glm::ivec2 const &position) {
   auto const currentPosition{project(position)};
 
   if (m_lastPosition == currentPosition) {
-    // Scale velocity to zero if time since last event > 10ms
-    m_velocity *= 0.0;
+    m_velocity *= m_lastTime.elapsed() > 0.01 ? 0.0 : 0.0;
     return;
   }
 
@@ -40,7 +39,7 @@ void TrackBall::mousePress(glm::ivec2 const &position) {
   m_mouseTracking = true;
   m_lastTime.restart();
   m_lastPosition = project(position);
-  m_velocity = 0.5f;
+  m_velocity = 0.0f;
 }
 
 void TrackBall::mouseRelease(glm::ivec2 const &position) {
