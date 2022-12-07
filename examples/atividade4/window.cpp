@@ -1,5 +1,7 @@
 #include "window.hpp"
 
+#include "imfilebrowser.h"
+
 void Window::onEvent(SDL_Event const &event) {
   glm::ivec2 mousePosition;
   SDL_GetMouseState(&mousePosition.x, &mousePosition.y);
@@ -49,6 +51,9 @@ void Window::onUpdate() {
 
 void Window::onPaint() {
 
+  auto const assetsPath{abcg::Application::getAssetsPath()};
+
+  m_model.loadTexture(assetsPath + "maps/viking_room.jpg");
   m_model.loadObj();
   m_model.setupVAO(m_program);
 

@@ -29,6 +29,8 @@ private:
   glm::mat4 m_projMatrix{1.0f};
 
   GLuint m_program{};
+
+  abcg::Timer m_timer{};
 };
 
 #endif
