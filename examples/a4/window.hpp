@@ -51,6 +51,7 @@ private:
 
   void loadModel(std::string_view path);
   abcg::Timer m_timer;
+  abcg::Timer m_timer2;
 };
 
 #endif

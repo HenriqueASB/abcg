@@ -88,9 +88,9 @@ void Model::loadObj(std::string_view path, bool standardize) {
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
 
-      glm::vec3 position{(i / (float)(n-1)), (j / (float)(n-1)), 0.0f};
+      glm::vec3 position{(i / (float)(n - 1)), (j / (float)(n - 1)), 0.0f};
       glm::vec3 normal{0.0f, 0.0f, 0.0f};
-      glm::vec2 texCoord{(i / (float)(n-1)), (j / (float)(n-1))};
+      glm::vec2 texCoord{(i / (float)(n - 1)), (j / (float)(n - 1))};
       Vertex const vertex{
           .position = position, .normal = normal, .texCoord = texCoord};
       m_vertices.push_back(vertex);
@@ -141,12 +141,12 @@ void Model::loadObj(std::string_view path, bool standardize) {
     computeNormals();
   }
 
-  randomZ();
+  // randomZ();
 
   createBuffers();
 }
 
-void Model::randomZ(){
+void Model::randomZ() {
   std::uniform_real_distribution rd(0.0f, 1.0f);
 
   for (auto &vertex : m_vertices) {

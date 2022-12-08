@@ -75,16 +75,16 @@ void Window::loadModel(std::string_view path) {
 }
 
 void Window::onPaint() {
-  if (m_timer.elapsed() < 1.0 / 6 )
+  if (m_timer.elapsed() < 1.0 / 6)
     return;
   m_timer.restart();
 
   auto const assetsPath{abcg::Application::getAssetsPath()};
 
-  m_model.loadDiffuseTexture(assetsPath);
+  // m_model.loadDiffuseTexture(assetsPath);
   m_model.loadObj(assetsPath);
   m_model.setupVAO(m_programs.at(m_currentProgramIndex));
-  m_trianglesToDraw = m_model.getNumTriangles();
+  // m_trianglesToDraw = m_model.getNumTriangles();
 
   abcg::glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -112,6 +112,8 @@ void Window::onPaint() {
   auto const diffuseTexLoc{abcg::glGetUniformLocation(program, "diffuseTex")};
   auto const mappingModeLoc{abcg::glGetUniformLocation(program, "mappingMode")};
 
+  auto const time{abcg::glGetUniformLocation(program, "uTime")};
+
   // Set uniform variables that have the same value for every model
   abcg::glUniformMatrix4fv(viewMatrixLoc, 1, GL_FALSE, &m_viewMatrix[0][0]);
   abcg::glUniformMatrix4fv(projMatrixLoc, 1, GL_FALSE, &m_projMatrix[0][0]);
@@ -135,6 +137,8 @@ void Window::onPaint() {
   abcg::glUniform4fv(KdLoc, 1, &m_Kd.x);
   abcg::glUniform4fv(KsLoc, 1, &m_Ks.x);
   abcg::glUniform1f(shininessLoc, m_shininess);
+
+  abcg::glUniform1f(time, m_timer2.elapsed());
 
   m_model.render(m_trianglesToDraw);
 
