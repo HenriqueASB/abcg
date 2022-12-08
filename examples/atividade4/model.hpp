@@ -13,13 +13,15 @@ struct Vertex {
 
 class Model {
 public:
-  void loadObj(bool standardize = true);
+  void createGeometry(bool standardize = true);
   void render(int numTriangles = -1) const;
   void setupVAO(GLuint program);
   void destroy() const;
   void randomZ();
   void createBuffers();
   void standardize();
+
+  int number{10};
 
 
 

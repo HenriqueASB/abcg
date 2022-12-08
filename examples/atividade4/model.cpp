@@ -32,11 +32,11 @@ void Model::createBuffers() {
   abcg::glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Model::loadObj(bool standardize) {
+void Model::createGeometry(bool standardize) {
   m_vertices.clear();
   m_indices.clear();
 
-  int n = 10;
+  int n = number;
 
   for(int i = 0; i <= n; i ++){
       for(int j = 0; j <= n; j ++){
@@ -70,7 +70,7 @@ void Model::loadObj(bool standardize) {
 }
 
 void Model::randomZ(){
-  std::uniform_real_distribution rd(0.f, 0.5f);
+  std::uniform_real_distribution rd(0.0f, 1.0f);
 
   for (auto &vertex : m_vertices) {
     vertex.position = {vertex.position.x, vertex.position.y, rd(m_randomEngine)};
