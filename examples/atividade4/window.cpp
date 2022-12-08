@@ -35,7 +35,7 @@ void Window::onCreate() {
                                  {.source = assetsPath + "depth.frag",
                                   .stage = abcg::ShaderStage::Fragment}});
 
-  m_model.loadObj();
+  m_model.createGeometry();
   m_model.setupVAO(m_program);
 
   m_trianglesToDraw = m_model.getNumTriangles();
@@ -50,11 +50,14 @@ void Window::onUpdate() {
 }
 
 void Window::onPaint() {
+  if (m_timer.elapsed() < 1.0 / 6 )
+    return;
+  m_timer.restart();
 
   auto const assetsPath{abcg::Application::getAssetsPath()};
 
   m_model.loadTexture(assetsPath + "maps/viking_room.jpg");
-  m_model.loadObj();
+  m_model.createGeometry();
   m_model.setupVAO(m_program);
 
   abcg::glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -106,7 +109,7 @@ void Window::onPaintUI() {
 
   // Create a window for the other widgets
   {
-    auto const widgetSize{ImVec2(222, 90)};
+    auto const widgetSize{ImVec2(222, 150)};
     ImGui::SetNextWindowPos(ImVec2(m_viewportSize.x - widgetSize.x - 5, 5));
     ImGui::SetNextWindowSize(widgetSize);
     ImGui::Begin("Widget window", nullptr, ImGuiWindowFlags_NoDecoration);
@@ -173,6 +176,10 @@ void Window::onPaintUI() {
       } else {
         m_projMatrix = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 5.0f);
       }
+    }
+    // numero gerador
+    {
+      ImGui::InputInt("Numero Gerador", &m_model.number);
     }
 
     ImGui::End();

@@ -67,11 +67,11 @@ void Model::loadTexture(std::string_view path) {
   m_texture = abcg::loadOpenGLTexture({.path = path});
 }
 
-void Model::loadObj(bool standardize) {
+void Model::createGeometry(bool standardize) {
   m_vertices.clear();
   m_indices.clear();
 
-  int n = 10;
+  int n = number;
 
   for (int i = 0; i <= n; i++) {
     for (int j = 0; j <= n; j++) {
@@ -103,8 +103,8 @@ void Model::loadObj(bool standardize) {
   createBuffers();
 }
 
-void Model::randomZ() {
-  std::uniform_real_distribution rd(0.f, 0.5f);
+void Model::randomZ(){
+  std::uniform_real_distribution rd(0.0f, 1.0f);
 
   for (auto &vertex : m_vertices) {
     vertex.position = {vertex.position.x, vertex.position.y,

@@ -16,13 +16,17 @@ struct Vertex {
 class Model {
 public:
   void loadTexture(std::string_view path);
-  void loadObj(bool standardize = true);
+  void createGeometry(bool standardize = true);
   void render(int numTriangles = -1) const;
   void setupVAO(GLuint program);
   void destroy() const;
   void randomZ();
   void createBuffers();
   void standardize();
+
+  int number{10};
+
+
 
   [[nodiscard]] int getNumTriangles() const {
     return gsl::narrow<int>(m_indices.size()) / 3;
