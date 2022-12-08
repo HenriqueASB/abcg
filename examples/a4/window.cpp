@@ -49,7 +49,8 @@ void Window::onCreate() {
 
   // Load default model
   // loadModel(assetsPath + "roman_lamp.obj");
-  m_mappingMode = 3; // "From mesh" option
+  loadModel(assetsPath);
+  //m_mappingMode = 3; // "From mesh" option
 
   // Initial trackball spin
   m_trackBallModel.setAxis(glm::normalize(glm::vec3(1, 1, 1)));

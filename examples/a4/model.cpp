@@ -20,7 +20,7 @@ void Model::computeNormals() {
   }
 
   // Compute face normals
-  for (auto const offset : iter::range(m_indices.size())) {
+  for (auto const offset : iter::range<int>(0, m_indices.size(), 3)) {
     // Get face vertices
     auto &a{m_vertices.at(m_indices.at(offset + 0))};
     auto &b{m_vertices.at(m_indices.at(offset + 1))};
@@ -83,9 +83,9 @@ void Model::loadObj(std::string_view path, bool standardize) {
   m_hasNormals = false;
   m_hasTexCoords = false;
 
-  int n = 10;
+  int n = 3;
 
-  for (int i = 0; i <= n; i++) {
+  for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
 
       glm::vec3 position{(j / (float)n), (i / (float)n), 0.0f};
@@ -101,6 +101,20 @@ void Model::loadObj(std::string_view path, bool standardize) {
   // A key:value map with key=Vertex and value=index
   std::unordered_map<Vertex, GLuint> hash{};
 
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
+      m_indices.push_back(i * n + j);
+      m_indices.push_back((i + 1) * n + j);
+      m_indices.push_back((i + 1) * n + (j + 1));
+      m_indices.push_back(i * n + j);
+      m_indices.push_back((i + 1) * n + (j + 1));
+      m_indices.push_back(i * n + (j + 1));
+    }
+  }
+
+  auto const testval = m_vertices.at(m_indices.at(0));
+
+  /*
   for (int k = 0; k < ((n) * (n + 1)); k++) {
     if (((k + 1) % (n + 1))) {
       m_indices.push_back(k);
@@ -111,7 +125,7 @@ void Model::loadObj(std::string_view path, bool standardize) {
       m_indices.push_back(k + n + 2);
     }
   }
-
+  */
   // Default values
   m_Ka = {0.1f, 0.1f, 0.1f, 1.0f};
   m_Kd = {0.7f, 0.7f, 0.7f, 1.0f};
