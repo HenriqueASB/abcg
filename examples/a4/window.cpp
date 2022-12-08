@@ -292,7 +292,7 @@ void Window::onPaintUI() {
     if (!m_model.isUVMapped()) {
       ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh has no UV coords.");
     }
-
+    /*
     // UV mapping box
     {
       std::vector<std::string> comboItems{"Triplanar", "Cylindrical",
@@ -315,7 +315,7 @@ void Window::onPaintUI() {
       }
       ImGui::PopItemWidth();
     }
-
+    */
     ImGui::End();
   }
 

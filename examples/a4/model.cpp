@@ -88,9 +88,9 @@ void Model::loadObj(std::string_view path, bool standardize) {
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
 
-      glm::vec3 position{(j / (float)n), (i / (float)n), 0.0f};
+      glm::vec3 position{(j / (float)(n-1)), (i / (float)(n-1)), 0.0f};
       glm::vec3 normal{0.0f, 0.0f, 0.0f};
-      glm::vec2 texCoord{(j / (float)n), (i / (float)n)};
+      glm::vec2 texCoord{(j / (float)(n-1)), (i / (float)(n-1))};
       Vertex const vertex{
           .position = position, .normal = normal, .texCoord = texCoord};
       m_vertices.push_back(vertex);
@@ -111,8 +111,6 @@ void Model::loadObj(std::string_view path, bool standardize) {
       m_indices.push_back(i * n + (j + 1));
     }
   }
-
-  auto const testval = m_vertices.at(m_indices.at(0));
 
   /*
   for (int k = 0; k < ((n) * (n + 1)); k++) {
