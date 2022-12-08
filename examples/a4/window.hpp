@@ -50,6 +50,7 @@ private:
   float m_shininess{};
 
   void loadModel(std::string_view path);
+  abcg::Timer m_timer;
 };
 
 #endif

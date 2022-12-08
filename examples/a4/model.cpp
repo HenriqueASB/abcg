@@ -83,14 +83,14 @@ void Model::loadObj(std::string_view path, bool standardize) {
   m_hasNormals = false;
   m_hasTexCoords = false;
 
-  int n = 3;
+  int n = 10;
 
   for (int i = 0; i < n; i++) {
     for (int j = 0; j < n; j++) {
 
-      glm::vec3 position{(j / (float)(n-1)), (i / (float)(n-1)), 0.0f};
+      glm::vec3 position{(i / (float)(n-1)), (j / (float)(n-1)), 0.0f};
       glm::vec3 normal{0.0f, 0.0f, 0.0f};
-      glm::vec2 texCoord{(j / (float)(n-1)), (i / (float)(n-1))};
+      glm::vec2 texCoord{(i / (float)(n-1)), (j / (float)(n-1))};
       Vertex const vertex{
           .position = position, .normal = normal, .texCoord = texCoord};
       m_vertices.push_back(vertex);
@@ -101,8 +101,8 @@ void Model::loadObj(std::string_view path, bool standardize) {
   // A key:value map with key=Vertex and value=index
   std::unordered_map<Vertex, GLuint> hash{};
 
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) {
+  for (int i = 0; i < n - 1; i++) {
+    for (int j = 0; j < n - 1; j++) {
       m_indices.push_back(i * n + j);
       m_indices.push_back((i + 1) * n + j);
       m_indices.push_back((i + 1) * n + (j + 1));
@@ -130,6 +130,9 @@ void Model::loadObj(std::string_view path, bool standardize) {
   m_Ks = {1.0f, 1.0f, 1.0f, 1.0f};
   m_shininess = 25.0f;
 
+  auto const seed{std::chrono::steady_clock::now().time_since_epoch().count()};
+  m_randomEngine.seed(seed);
+
   if (standardize) {
     Model::standardize();
   }
@@ -138,7 +141,18 @@ void Model::loadObj(std::string_view path, bool standardize) {
     computeNormals();
   }
 
+  randomZ();
+
   createBuffers();
+}
+
+void Model::randomZ(){
+  std::uniform_real_distribution rd(0.0f, 1.0f);
+
+  for (auto &vertex : m_vertices) {
+    vertex.position = {vertex.position.x, vertex.position.y,
+                       rd(m_randomEngine)};
+  }
 }
 
 void Model::render(int numTriangles) const {

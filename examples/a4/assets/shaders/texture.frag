@@ -8,6 +8,7 @@ in vec3 fragV;
 in vec2 fragTexCoord;
 in vec3 fragPObj;
 in vec3 fragNObj;
+in float fragHei;
 
 // Light properties
 uniform vec4 Ia, Id, Is;
@@ -45,7 +46,7 @@ vec4 BlinnPhong(vec3 N, vec3 L, vec3 V, vec2 texCoord) {
   vec4 map_Kd = texture(diffuseTex, texCoord);
   vec4 map_Ka = map_Kd;
 
-  vec4 diffuseColor = map_Kd * Kd * Id * lambertian;
+  vec4 diffuseColor = {fragHei, fragHei, fragHei, 0};
   vec4 specularColor = Ks * Is * specular;
   vec4 ambientColor = map_Ka * Ka * Ia;
 

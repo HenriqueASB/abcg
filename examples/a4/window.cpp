@@ -50,7 +50,7 @@ void Window::onCreate() {
   // Load default model
   // loadModel(assetsPath + "roman_lamp.obj");
   loadModel(assetsPath);
-  //m_mappingMode = 3; // "From mesh" option
+  m_mappingMode = 3; // "From mesh" option
 
   // Initial trackball spin
   m_trackBallModel.setAxis(glm::normalize(glm::vec3(1, 1, 1)));
@@ -75,6 +75,17 @@ void Window::loadModel(std::string_view path) {
 }
 
 void Window::onPaint() {
+  if (m_timer.elapsed() < 1.0 / 6 )
+    return;
+  m_timer.restart();
+
+  auto const assetsPath{abcg::Application::getAssetsPath()};
+
+  m_model.loadDiffuseTexture(assetsPath);
+  m_model.loadObj(assetsPath);
+  m_model.setupVAO(m_programs.at(m_currentProgramIndex));
+  m_trianglesToDraw = m_model.getNumTriangles();
+
   abcg::glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   abcg::glViewport(0, 0, m_viewportSize.x, m_viewportSize.y);

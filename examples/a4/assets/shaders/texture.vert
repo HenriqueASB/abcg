@@ -11,12 +11,15 @@ uniform mat3 normalMatrix;
 
 uniform vec4 lightDirWorldSpace;
 
+uniform float inHei;
+
 out vec3 fragV;
 out vec3 fragL;
 out vec3 fragN;
 out vec2 fragTexCoord;
 out vec3 fragPObj;
 out vec3 fragNObj;
+out float fragHei;
 
 void main() {
   vec3 P = (viewMatrix * modelMatrix * vec4(inPosition, 1.0)).xyz;
@@ -29,6 +32,7 @@ void main() {
   fragTexCoord = inTexCoord;
   fragPObj = inPosition;
   fragNObj = inNormal;
+  fragHei = inPosition.z;
 
   gl_Position = projMatrix * vec4(P, 1.0);
 }
