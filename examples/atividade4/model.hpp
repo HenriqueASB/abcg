@@ -7,12 +7,15 @@
 
 struct Vertex {
   glm::vec3 position{};
+  glm::vec3 normal{};
+  glm::vec2 textCoord{};
 
   friend bool operator==(Vertex const &, Vertex const &) = default;
 };
 
 class Model {
 public:
+  void loadTexture(std::string_view path);
   void createGeometry(bool standardize = true);
   void render(int numTriangles = -1) const;
   void setupVAO(GLuint program);
@@ -34,12 +37,17 @@ private:
   GLuint m_VBO{};
   GLuint m_EBO{};
 
+  GLuint m_texture{};
+
   std::vector<Vertex> m_vertices;
   std::vector<GLuint> m_indices;
 
   std::default_random_engine m_randomEngine;
 
+  bool m_hasNormals{false};
+  bool m_hasTextCoords{false};
 
+  void computeNormal();
 };
 
 #endif
