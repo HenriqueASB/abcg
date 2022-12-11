@@ -4,4 +4,3 @@
 # add_subdirectory(atividade2)
 # add_subdirectory(atividade3)
 add_subdirectory(atividade4)
-add_subdirectory(a4)
