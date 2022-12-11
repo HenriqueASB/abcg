@@ -26,6 +26,8 @@ RAs:    11050714
 
 - A geração aleatória de relevo aliada a ilusão de movimento, produz uma animação de movimentação por um terreno.
 
+- Uma observação quanto ao framerate da animação, para a aplicação para desktop a animação apresentou um melhor comportamento para um framerate de 3 frames por segundo, enquanto que para versão Web o melhor framerate foi de 30 frames por segundo. Com esses valores há uma maior fluidez na animação.
+
 ## Melhorias para trabalhos futuros
 
 - A utilização de outras texturas bem como efeitos que podem ser implementados diretos no shader são ideias interessantes que podem ser exploradas com mais profundidade nos trabalhos posteriores.
