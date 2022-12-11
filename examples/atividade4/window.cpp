@@ -74,14 +74,13 @@ void Window::loadModel() {
 }
 
 void Window::onPaint() {
-  if (m_timer.elapsed() < 1.0/3)
+  if (m_timer.elapsed() < 1.0 / 3)
     return;
   m_timer.restart();
 
   // auto const assetsPath{abcg::Application::getAssetsPath()};
   m_model.createGeometry();
   m_model.setupVAO(m_programs.at(m_currentProgramIndex));
-
 
   abcg::glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -151,27 +150,6 @@ void Window::onUpdate() {
 void Window::onPaintUI() {
   abcg::OpenGLWindow::onPaintUI();
 
-  auto const scaledWidth{gsl::narrow_cast<int>(m_viewportSize.x * 0.8f)};
-  auto const scaledHeight{gsl::narrow_cast<int>(m_viewportSize.y * 0.8f)};
-
-  // File browser for models
-  static ImGui::FileBrowser fileDialogModel;
-  fileDialogModel.SetTitle("Load 3D Model");
-  fileDialogModel.SetTypeFilters({".obj"});
-  fileDialogModel.SetWindowSize(scaledWidth, scaledHeight);
-
-  // File browser for textures
-  static ImGui::FileBrowser fileDialogTex;
-  fileDialogTex.SetTitle("Load Texture");
-  fileDialogTex.SetTypeFilters({".jpg", ".png"});
-  fileDialogTex.SetWindowSize(scaledWidth, scaledHeight);
-
-#if defined(__EMSCRIPTEN__)
-  auto const assetsPath{abcg::Application::getAssetsPath()};
-  fileDialogModel.SetPwd(assetsPath);
-  fileDialogTex.SetPwd(assetsPath + "/maps");
-#endif
-
   // Create main window widget
   {
     auto widgetSize{ImVec2(222, 190)};
@@ -185,24 +163,6 @@ void Window::onPaintUI() {
     ImGui::SetNextWindowSize(widgetSize);
     ImGui::Begin("Widget window", nullptr,
                  ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDecoration);
-
-    // Menu
-    {
-      bool loadModel{};
-      bool loadDiffTex{};
-      if (ImGui::BeginMenuBar()) {
-        if (ImGui::BeginMenu("File")) {
-          ImGui::MenuItem("Load 3D Model...", nullptr, &loadModel);
-          ImGui::MenuItem("Load Diffuse Texture...", nullptr, &loadDiffTex);
-          ImGui::EndMenu();
-        }
-        ImGui::EndMenuBar();
-      }
-      if (loadModel)
-        fileDialogModel.Open();
-      if (loadDiffTex)
-        fileDialogTex.Open();
-    }
 
     // Slider will be stretched horizontally
     ImGui::PushItemWidth(widgetSize.x - 16);
@@ -274,13 +234,11 @@ void Window::onPaintUI() {
             glm::ortho(-1.0f * aspect, 1.0f * aspect, -1.0f, 1.0f, 0.1f, 5.0f);
       }
     }
-        // numero gerador
+    // numero gerador
     {
       ImGui::LabelText(" ", "Numero Gerador");
       ImGui::InputInt(" ", &m_model.number);
     }
-
-
 
     if (!m_model.isUVMapped()) {
       ImGui::TextColored(ImVec4(1, 1, 0, 1), "Mesh has no UV coords.");
@@ -322,26 +280,6 @@ void Window::onPaintUI() {
     ImGui::PopItemWidth();
 
     ImGui::End();
-  }
-
-  fileDialogModel.Display();
-  if (fileDialogModel.HasSelected()) {
-    loadModel();
-    fileDialogModel.ClearSelected();
-
-    if (m_model.isUVMapped()) {
-      // Use mesh texture coordinates if available...
-      m_mappingMode = 3;
-    } else {
-      // ...or triplanar mapping otherwise
-      m_mappingMode = 0;
-    }
-  }
-
-  fileDialogTex.Display();
-  if (fileDialogTex.HasSelected()) {
-    m_model.loadDiffuseTexture(fileDialogTex.GetSelected().string());
-    fileDialogTex.ClearSelected();
   }
 }
 
